@@ -21,7 +21,7 @@ conn = pymysql.connect(
 cursor = conn.cursor()
 
 # Setup ngrok, load token from .env
-NGROK_TOKEN = "2qbm2tb2N5V976kazTBFrXp6nTH_5ogBZLoLfAB7Cronw98QM"
+NGROK_TOKEN = "2tsvr0e52TVnMuzMSKuFm5OUJ8C_6fzhGmrPvG7fVofSXLhiW"
 ngrok.set_auth_token(NGROK_TOKEN)
 
 # Create table for logging request data
