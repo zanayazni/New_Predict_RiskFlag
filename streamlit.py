@@ -10,21 +10,36 @@ def get_ngrok_url():
         response = requests.get("http://127.0.0.1:4040/api/tunnels")
         data = response.json()
         public_url = data["tunnels"][0]["public_url"]  # Ambil URL pertama
+        if not public_url.startswith(("http://", "https://")):
+            public_url = f"https://{public_url}"  # Tambahkan skema jika tidak ada
         return public_url
     except Exception as e:
-        print(f"Error mengambil URL ngrok: {e}")
+        st.error(f"Error mengambil URL ngrok: {e}")
         return None
-    
+
 BACKEND_URL = get_ngrok_url()
 
+if not BACKEND_URL:
+    st.error("Tidak dapat mengambil URL backend. Pastikan ngrok berjalan.")
+    st.stop()  # Hentikan aplikasi Streamlit jika URL tidak valid
+
 def register_user(username, password):
-    response = requests.post(f"{BACKEND_URL}/register", json={"username": username, "password": password})
-    return response
+    try:
+        response = requests.post(f"{BACKEND_URL}/register", json={"username": username, "password": password})
+        return response
+    except requests.exceptions.RequestException as e:
+        st.error(f"Terjadi kesalahan saat menghubungi backend: {e}")
+        return None
 
 def login_user(username, password):
-    auth = (username, password)
-    response = requests.post(f"{BACKEND_URL}/login", auth=auth)
-    return response
+    try:
+        auth = (username, password)
+        response = requests.post(f"{BACKEND_URL}/login", auth=auth)
+        return response
+    except requests.exceptions.RequestException as e:
+        st.error(f"Terjadi kesalahan saat menghubungi backend: {e}")
+        return None
+
 
 def predict_risk(data, username, password):
     auth = (username, password)
