@@ -17,7 +17,7 @@ def get_ngrok_url():
         st.error(f"Error mengambil URL ngrok: {e}")
         return None
 
-BACKEND_URL = "https://28ac-36-69-198-44.ngrok-free.app"
+BACKEND_URL = "https://9e6f-36-69-198-44.ngrok-free.app"
 
 if not BACKEND_URL:
     st.error("Tidak dapat mengambil URL backend. Pastikan ngrok berjalan.")
