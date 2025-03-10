@@ -10,6 +10,8 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.responses import JSONResponse
 from pyngrok import ngrok
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Create MySQL connection
 conn = pymysql.connect(
@@ -55,6 +57,13 @@ conn.commit()
 
 # Create a FastAPI instance
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://*.streamlit.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 security = HTTPBasic()
 
 # Load model and preprocessing tools
