@@ -21,6 +21,7 @@ BACKEND_URL = get_ngrok_url()
 
 if not BACKEND_URL:
     st.error("Tidak dapat mengambil URL backend. Pastikan ngrok berjalan.")
+    st.error(BACKEND_URL)
     st.stop()  # Hentikan aplikasi Streamlit jika URL tidak valid
 
 def register_user(username, password):
